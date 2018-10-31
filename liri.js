@@ -13,8 +13,8 @@ if (process.argv[2] === "concert-this") {
   concertThis()
 
 } else if (process.argv[2] === "spotify-this-song") {
-  var query = process.argv[3];
-  spotifyThisSong(query)
+  
+  spotifyThisSong()
 
 } else if (process.argv[2] === "movie-this") {
 
@@ -22,20 +22,9 @@ if (process.argv[2] === "concert-this") {
 
 } else if (process.argv[2] === "do-what-it-says") {
 
-  fs.readFile("random.txt", "utf8", function (err, data) {
-    if (err) {
-      return console.log(err);
-    }
-
-    var output = data.split(",");
-
-    output.forEach(function (element) {
-
-     console.log(JSON.parse(element))
-
-    });
-  })
+  readTxt()
 }
+
 
 function concertThis() {
   var artist = process.argv[3];
@@ -58,8 +47,8 @@ function concertThis() {
 
 function spotifyThisSong() {
 
-  var query = process.argv[3];
-
+  var query = process.argv[3]
+  console.log(query);
   spotify.search({
     type: "track",
     query: query,
@@ -83,7 +72,7 @@ function spotifyThisSong() {
     });
   });
 
-  //    * If no song is provided then your program will default to "The Sign" by Ace of Base.
+  
 
 }
 
@@ -108,3 +97,17 @@ function movieThis() {
     }
   });
 }
+
+function readTxt() {
+  fs.readFile("random.txt", "utf8", function (err, data) {
+    if (err) {
+      return console.log(err);
+    }
+
+    var output = data.split(",");
+    process.argv[3] = output[1];
+
+    spotifyThisSong()
+  })
+}
+
