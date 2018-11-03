@@ -1,9 +1,9 @@
 require("dotenv").config();
 
-var request = require('request');
-var keys = require('./Keys');
-var Spotify = require('node-spotify-api');
-var moment = require('moment');
+var request = require("request");
+var keys = require("./Keys");
+var Spotify = require("node-spotify-api");
+var moment = require("moment");
 var fs = require("fs");
 var spotify = new Spotify(keys.spotify);
 
@@ -13,7 +13,7 @@ if (process.argv[2] === "concert-this") {
   concertThis()
 
 } else if (process.argv[2] === "spotify-this-song") {
-  
+
   spotifyThisSong()
 
 } else if (process.argv[2] === "movie-this") {
@@ -52,7 +52,7 @@ function spotifyThisSong() {
   spotify.search({
     type: "track",
     query: query,
-    limit: 5
+    limit: 1
   }, function (err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
@@ -71,9 +71,6 @@ function spotifyThisSong() {
 
     });
   });
-
-  
-
 }
 
 function movieThis() {
@@ -81,7 +78,6 @@ function movieThis() {
   var movieName = process.argv[3];
 
   request("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
-
 
     if (!error && response.statusCode === 200) {
       var pbody = JSON.parse(body)
@@ -110,4 +106,3 @@ function readTxt() {
     spotifyThisSong()
   })
 }
-
